@@ -285,7 +285,7 @@ def pause():
 
 def running():
     """Основная функция игры, в ней содержится тело цикла"""
-    global run, lives, dupe_x, dupe_x_1
+    global run, lives, dupe_x, dupe_x_1, scores
     while run:
         clock.tick(30) # 30 фпс
 
