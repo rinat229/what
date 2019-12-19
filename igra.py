@@ -15,7 +15,7 @@ color2 = (255, 242, 0)
 color3 = (14, 209, 69)
 color_heart = (255, 202, 24)
 color_tube = (140, 255, 251)
-mario1 = pygame.image.load('mario.png') # изображение марио не в прыжке, также далее размера марио и т.п.
+mario1 = pygame.image.load('mario.png') # изображение марио не в прыжке, также далее размеры марио и т.п.
 mario1.set_colorkey(white)
 mario = mario1
 mario_jump = pygame.image.load('mario_jump.png') #изображение марио в прыжке
@@ -207,7 +207,7 @@ def scores_counter():
 
 def BigJump():
     """ Эта интересная штучка выйдет в следующем глобальном обновлении.
-    Разработчики ушли в запой"""
+    Разработчики ушли в дубки"""
     global isJump, jump_count, mario_y
 
     keys = pygame.key.get_pressed()
@@ -227,7 +227,7 @@ def BigJump():
 
 
 def check_collisions():
-    """функция предназначена для того, чтобы мы проверяли
+    """Функция предназначена для того, чтобы мы проверяли
     столкнулся ли игрок с препятствием"""
     global mario_y, mario_height, dupe_y, dupe_x, dupe_y_1, dupe_x_1, scores
 
@@ -246,8 +246,8 @@ def check_collisions():
     return True
 
 def game_over():
-    """ Если игрок врезался в трубу более 2 раз, то вызывается game_over().
-    Можно либо рестартнуть, либо выйти из игры"""
+    """ Если игрок врезался в трубу более 2 раз, то вызывается данная функция.
+    Можно либо начать заново, либо выйти из игры"""
     paused = True # если вызвали гейм овер
     while paused:
         clock.tick(30)
@@ -258,7 +258,7 @@ def game_over():
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_RETURN]:
-            paused = False#если нажали ENTER, то выходим из цикла и начинаем игру заново
+            paused = False # если нажали ENTER, то выходим из цикла и начинаем игру заново
 
         if keys[pygame.K_ESCAPE]:
             pygame.quit() # если нажали ESC, то выходим из игры
@@ -289,26 +289,26 @@ def running():
     while run:
         clock.tick(30) # 30 фпс
 
-        if not (check_collisions()):#если столкнулись с препятствием, то
+        if not (check_collisions()):# если столкнулись с препятствием, то
             dupe_x = random.randint(1280, 1800) # заново генерируем препятствия за пределами окна(в правой части)
             dupe_x_1 = random.randint(1280, 1800)
-            lives -= 1 # каждый раз сталкиваясь, уменьшаем жизьку
-            if lives == 0: # если все жизьки потрачены, то
+            lives -= 1 # каждый раз сталкиваясь, уменьшаем количество жизней
+            if lives == 0: # если все жизни потрачены, то
                 game_over() # вызываем game_over
-                lives = 3 # заново 3 жизьки
+                lives = 3 # заново 3 жизни
                 scores = 0 # обнуляем очки
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
 
         keys = pygame.key.get_pressed()
-        draw()#рисуем всевозможную чепуху
+        draw()# рисуем объекты
         draw_clouds()# и облака
         if keys[pygame.K_ESCAPE]:
             pause()
         # BigJump()
-        scores_counter()#подсчитываем очки
-        Jump()#постоянно проверяем , прыгаем ли мы
+        scores_counter()# подсчитываем очки
+        Jump()# постоянно проверяем, прыгаем ли мы
        
 
 if __name__ == "__main__":
