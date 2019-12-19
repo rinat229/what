@@ -15,23 +15,23 @@ color2 = (255, 242, 0)
 color3 = (14, 209, 69)
 color_heart = (255, 202, 24)
 color_tube = (140, 255, 251)
-mario1 = pygame.image.load('mario.png') #карт марио, также далее размера марио и т.п.
+mario1 = pygame.image.load('mario.png') # изображение марио не в прыжке, также далее размера марио и т.п.
 mario1.set_colorkey(white)
 mario = mario1
-mario_jump = pygame.image.load('mario_jump.png') #карт марио в прыжке
+mario_jump = pygame.image.load('mario_jump.png') #изображение марио в прыжке
 mario_jump.set_colorkey(white)
-bg = pygame.image.load('111.jpg') #background фон
+bg = pygame.image.load('111.jpg') # background фон
 tube = pygame.image.load('tube.png') # препятствие
 tube.set_colorkey(color_tube)
-cloud1 = pygame.image.load('cloud1.png') # 1 картинка облака, они представлены в виде 3 объектов
+cloud1 = pygame.image.load('cloud1.png') # картинки облаков, которые представлены в виде 3 объектов
 cloud1.set_colorkey(color1)
-cloud2 = pygame.image.load('cloud2.png') # 2 картинка облака и т.д.
+cloud2 = pygame.image.load('cloud2.png')
 cloud2.set_colorkey(color2)
 cloud3 = pygame.image.load('cloud3.png')
 cloud3.set_colorkey(color3)
 heart = pygame.image.load('heatr1.png') 
 heart.set_colorkey(color_heart)
-dirt_1 = pygame.image.load('dirt.jpg') # картинка земли, для того чтобы она тоже рисовалась отдельно со своей скоростьб
+dirt_1 = pygame.image.load('dirt.jpg') # картинка земли, для того чтобы она тоже рисовалась отдельно со своей скоростью
 dirt_2 = pygame.image.load('dirt.jpg')
 collision = pygame.image.load('collision.jpg')
 dirt_1_x= 0
@@ -65,33 +65,33 @@ above_dupe = False
 
 
 def draw():
-    """Эта функция рисует большинство объектов в окне,
-    а именно задний фон, препятствия, самого игрока и жизни"""
+    """Эта функция рисует большинство объектов в окне:
+    задний фон, препятствия, самого игрока и жизни"""
     global dupe_height, dupe_x, dupe_y, speed, dupe_x_1, dupe_y_1, paused, blink
 
-    window.blit(bg, (0, 0))#рисуем фон
-    window.blit(mario, (mario_x, mario_y))#вставляем картинку марио по его текущим координатам
+    window.blit(bg, (0, 0))# рисуем фон
+    window.blit(mario, (mario_x, mario_y))# вставляем картинку марио по его текущим координатам
 
-    if (abs(dupe_x - dupe_x_1) <= 400):#создаем рандомно (координаты) препятствия на разумном расстоянии, чтобы их можно было перепрыгнуть
+    if (abs(dupe_x - dupe_x_1) <= 400):# создаем рандомно (координаты) препятствия на разумном расстоянии, чтобы их можно было перепрыгнуть
         dupe_x_1 = random.randint(1280, 2100)
 
     if dupe_x > -77:# если препятствие ушло за левую часть карты, то отрисовываем его за пределами карты в правой части экрана, также рандомно и разумно
-        window.blit(tube, (dupe_x, dupe_y)) # рисуем препятствие по его текущим коордам
-        dupe_x -= speed # если труба(препятствие) у нас находится не за пределами, а в окне, то изменяем его х коорду
+        window.blit(tube, (dupe_x, dupe_y)) # рисуем препятствие по его текущим координатам
+        dupe_x -= speed # если препятствие находится не за пределами, а в окне, то изменяем его х координату
     else:
         dupe_x = random.randint(window_width, window_width + 820)
         window.blit(tube, (dupe_x, dupe_y))
 
-    if dupe_x_1 > -77:#так как у нас 2 одинаковые трубы, то тут все также, что и выше
+    if dupe_x_1 > -77:# так как у нас 2 одинаковых препятствия, действия аналогичны первому
         window.blit(tube, (dupe_x_1, dupe_y_1))
         dupe_x_1 -= speed
     else:
         dupe_x_1 = random.randint(window_width, window_width + 520)
         window.blit(tube, (dupe_x_1, dupe_y_1))
     keys = pygame.key.get_pressed()
-    if keys[pygame.K_ESCAPE]: # если зашли в паузу, то вызываем функц паузы
+    if keys[pygame.K_ESCAPE]: # если зашли в паузу, то вызываем функцию паузы
         pause()
-    print_text('Scores: ' + str(scores), 1100, 0)#постоянно рисуем текущие очки
+    print_text('Scores: ' + str(scores), 1100, 0) # постоянно рисуем текущие очки
     if lives == 3: # если жизни 3, значит рисуем 3 картинки жизни и т.д.
         window.blit(heart, (0, 0))
         window.blit(heart, (67, 0))
@@ -106,14 +106,14 @@ def draw():
 
 
 def draw_clouds():
-    """фунцкия рисует облака, в этом случае скорость движения облаков уже меньше 
+    """Фунцкия рисует облака, в этом случае скорость движения облаков уже меньше 
     для большей правдоподобности"""
     global speed_clouds, cloud1_x, cloud1_y, cloud2_x, cloud2_y, cloud3_x, cloud3_y, cloud_width_1, cloud_width_2, cloud_width_3
     if cloud1_x + cloud_width_1 > 0: # если облака в окне(не за пределами карты)
         window.blit(cloud1, (cloud1_x, cloud2_y)) # то рисуем по его текущим коордам
         cloud1_x -= speed_clouds # уменьшаем х координату
     else: 
-        cloud1_x = random.randint(window_width, window_width + 220) # если облачко пропало, то рандомно генерируем его за пределами
+        cloud1_x = random.randint(window_width, window_width + 220) # если облако пропало, то рандомно генерируем его за пределами
         cloud1_y = random.randint(68, 100)# то есть в правой части окна
 
     if cloud2_x + cloud_width_2 > 0:# идея такая же как и для препятствий, у нас есть 3 облака, и мы их рандомно создаем, а потом отрисовываем
@@ -154,11 +154,11 @@ def Jump():
     keys = pygame.key.get_pressed()
     if not (isJump):# проверяет, есть ли прыжок
         if keys[pygame.K_SPACE]: # проверяет нажали ли мы пробел
-            isJump = True # присваиваем так, чтобы не было возможности прыгать уже во время прыжка, то есть пока не приземлились
+            isJump = True # присваиваем так, чтобы не было возможности прыгать уже во время прыжка
             mario_jump.set_colorkey(white)
             mario = mario_jump
     else:#если мы в прыжке, то
-        if jump_count >= -10: # когда jump_count == -10, значит мы уже на земле
+        if jump_count >= -10: # если jump_count == -10, значит мы уже на земле
             if jump_count > 0: # если мы начали прыгать и летим до вершины параболы, то уменьшаем коорд у
                 mario_y -= (jump_count ** 2) / 1.6
             else: # если мы летим от вершины параболы до земли
@@ -180,10 +180,10 @@ def print_text(mes, x, y, font_type='font.ttf', font_syze=45, font_color=(0, 0, 
 
 
 def scores_counter():
-    """scorec_counter постоянно считает очки(то есть сколько препятствий мы перепрыгнули).
-    функция берет координаты препятствий и персонажа, и проверяет, перепрыгнули ли мы их"""
+    """scores_counter постоянно считает очки (то есть сколько препятствий мы перепрыгнули).
+    Функция берет координаты препятствий и персонажа, и проверяет, перепрыгнули ли мы их"""
     global scores, above_dupe
-    if not above_dupe:#above_dupe проверяет, находимся ли мы в текущий момент над препятствием(изначально False)
+    if not above_dupe:# above_dupe проверяет, находимся ли мы в текущий момент над препятствием (изначально False)
         if dupe_x <= mario_x + mario_width / 2 <= dupe_x + dupe_width:
             if mario_y + mario_height <= dupe_y:
                 above_dupe = True
