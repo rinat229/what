@@ -33,7 +33,6 @@ heart = pygame.image.load('heatr1.png')
 heart.set_colorkey(color_heart)
 dirt_1 = pygame.image.load('dirt.jpg') # картинка земли, для того чтобы она тоже рисовалась отдельно со своей скоростьб
 dirt_2 = pygame.image.load('dirt.jpg')
-collision = pygame.image.load('collision.jpg')
 dirt_1_x= 0
 blink = 0
 dirt_2_x= 1640
